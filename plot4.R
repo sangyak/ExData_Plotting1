@@ -17,9 +17,17 @@ test<-read.csv2.sql("household_power_consumption.txt",sql="SELECT * FROM file WH
 #create timestamp column
 test$dateTime <- strptime(paste(test$Date, test$Time), "%d/%m/%Y %H:%M:%S") 
 
-#plot histogram
-hist(test$Global_active_power,xlab="Global Active Power (kilowatts)",main="Global Active Power",col="Red")
+#set grid
+par(mfrow=c(2,2)) 
+
+#create plots
+plot(test$dateTime,test$Global_active_power, type ='l', xlab="",ylab ="Global Active Power")
+plot( test$dateTime, test$Voltage, type = "l",xlab = "dateTime", ylab = "Voltage")
+plot (test$dateTime,test$Sub_metering_1,type = "l", xlab = "", ylab = "Energy sub metering", col = "black")
+lines (test$dateTime,test$Sub_metering_2,type = "l", col = "red")
+lines (test$dateTime,test$Sub_metering_3,type = "l", col = "blue")
+plot( test$dateTime, test$Global_reactive_power, type = "l",xlab = "dateTime", ylab = "Global_reactive_power")
 
 #copy to png
-dev.copy(png, file = "plot1.png", width=480, height=480, units="px") ## Copy my plot to a PNG file
+dev.copy(png, file = "plot4.png") ## Copy my plot to a PNG file
 dev.off() ## Don't forget to close the PNG device!
